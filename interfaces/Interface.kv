@@ -1,0 +1,620 @@
+#:kivy 2.0.0
+TabbedPanel:
+    do_default_tab: False
+    TabbedPanelItem:
+        text: 'Atributos'
+        TelaAtributos:
+            id: tela_atributos
+    TabbedPanelItem:
+        text: 'Vantagem'
+        TelaVantagem:
+            id: tela_vantagem
+    TabbedPanelItem:
+        text: 'Perícias'
+        TelaPericias:
+            id: tela_pericias
+    TabbedPanelItem:
+        text: 'Inventário'
+        TelaInventario:
+            id: tela_inventario
+    
+    TabbedPanelItem:
+        text: 'Anotações'
+        TelaAnotacao:
+            id:tela_anotacao
+
+# tela dos atributdos
+<TelaAtributos>:
+    name: 'tela_atributos'
+    id: telaatributos
+    GridLayout:
+        rows:4
+        spacing:3
+        pos_hint:{"top":1,"x":0}
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1  # Preto
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        # Seção do nome do personagem e player
+        GridLayout:
+            size_hint: 1,0.07
+            cols: 4
+            Label:
+                text: 'Nome:'
+                size_hint: 0.25,1
+            TextInput:
+                id: personagem_nome
+                multiline: False
+            Label:
+                text: 'Jogador:'
+                size_hint: 0.33,1
+            TextInput:
+                id: player_nome
+                multiline: False
+        # Atributos Básicos, Avançados e de Combate, Recursos e Controle de Recursos
+        GridLayout:
+            cols:2
+            size_hint: 1, 0.30
+            # Atributos Basicos, Avançados
+            GridLayout:
+                cols:4
+                rows:4
+                size_hint: 0.38, 1
+                Label:
+                    text: 'ST:'
+                TextInput:
+                    id: st_input
+                    multiline: False
+                Label:
+                    text: 'PER:'
+                TextInput:
+                    id: per_input
+                    multiline: False
+                    readonly: True  
+                Label:
+                    text: 'DX:'
+                TextInput:
+                    id: dx_input
+                    multiline: False
+                Label:
+                    text: 'VTD:'
+                TextInput:
+                    id: vtd_input
+                    multiline: False
+                    readonly: True
+                Label:
+                    text: 'IQ:'
+                TextInput:
+                    id: iq_input
+                    multiline: False
+                Label:
+                    text: 'VEL:'
+                TextInput:
+                    id: vel_input
+                    multiline: False
+                    readonly: True
+                Label:
+                    text: 'HT:'
+                TextInput:
+                    id: ht_input
+                    multiline: False
+                Label:
+                    text: 'CB:'
+                TextInput:
+                    id: cb_input
+                    multiline: False
+                    readonly: True
+            # linha PV Recurso e controle e Defesas
+            GridLayout:
+                cols:2
+                size_hint: 1,1
+                # linha PV Recurso e controle
+                GridLayout:
+                    rows:4
+                    cols:1
+                    size_hint: 0.5,1
+                    BoxLayout:
+                        Label:
+                            text: 'PV:'
+                        TextInput:
+                            id: pva_input
+                            multiline: False
+                            readonly: True
+                        Label:
+                            text: '/'
+                        TextInput:
+                            id: pvm_input
+                            multiline: False
+                            readonly: True
+                        Button:
+                            text: '-'
+                            on_press: app.subtrair('pva_input', 'pv_incoming')
+                        TextInput:
+                            id: pv_incoming
+                            multiline: False
+                        Button:
+                            text: '+'
+                            on_press: app.somar('pva_input', 'pv_incoming')
+                    # linha PF Recurso e controle
+                    BoxLayout:
+                        Label:
+                            text: 'PF:'
+                        TextInput:
+                            id: pfa_input
+                            multiline: False
+                            readonly: True
+                        Label:
+                            text: '/'
+                        TextInput:
+                            id: pfm_input
+                            multiline: False
+                            readonly: True
+                        Button:
+                            text: '-'
+                            on_press: app.subtrair('pfa_input', 'pf_incoming')
+                        TextInput:
+                            id: pf_incoming
+                            multiline: False
+                        Button:
+                            text: '+'
+                            on_press: app.somar('pfa_input', 'pf_incoming')
+                    # linha PM Recurso e controle
+                    BoxLayout:
+                        Label:
+                            text: 'PM:'
+                        TextInput:
+                            id: pma_input
+                            multiline: False
+                            readonly: True
+                        Label:
+                            text: '/'
+                        TextInput:
+                            id: pmm_input
+                            multiline: False
+                            readonly: True
+                        Button:
+                            text: '-'
+                            on_press: app.subtrair('pma_input', 'pm_incoming')
+                        TextInput:
+                            id: pm_incoming
+                            multiline: False
+                        Button:
+                            text: '+'
+                            on_press: app.somar('pma_input', 'pm_incoming')
+                    # Atributos de Combate e Avançados
+                    BoxLayout:
+                        Button:
+                            id: dano_gdp_input
+                            text: 'GDP'
+                            size_hint: 0.6,1
+                            on_press: app.rolar_dano('GDP')
+                        Label:
+                            text:':'
+                            size_hint: 0.05,1
+                        TextInput:
+                            id: gdp_input
+                            multiline: False
+                            readonly: True
+                        Button:
+                            id: dano_bal_input
+                            text: 'BAL'
+                            size_hint: 0.6,1
+                            on_press: app.rolar_dano('BAL')
+                        Label:
+                            text:':'
+                            size_hint: 0.05,1
+                        TextInput:
+                            id: bal_input
+                            multiline: False
+                            readonly: True
+                # Defesas
+                GridLayout:
+                    cols:2
+                    size_hint: 0.3,1
+                    BoxLayout:
+                        orientation:'vertical'
+                        size_hint: 0.8,1
+                        Label:
+                            text: 'Deslocamento:'
+                        Label:
+                            text: 'Esquiva:'
+                        Label:
+                            text: 'Bloqueio:'
+                        Label:
+                            text: 'Aparar Fisico:'
+                        Label:
+                            text: 'Aparar Magico:'
+                    BoxLayout:
+                        orientation:'vertical'
+                        size_hint: 0.2,1
+                        TextInput:
+                            id: db_input
+                            multiline: False
+                            readonly: True
+                        TextInput:
+                            id: esquiva_input
+                            multiline: False
+                            readonly: True
+                        TextInput:
+                            id: bloqueio_input
+                            multiline: False
+                            readonly: True
+                        TextInput:
+                            id: apararf_input
+                            multiline: False
+                            readonly: True
+                        TextInput:
+                            id: apararm_input
+                            multiline: False
+                            readonly: True
+
+        # espaço em branco futuro pericias selecionadas.
+        GridLayout:
+            cols:3
+            BoxLayout:
+                size_hint: 0.4,1
+            GridLayout:
+                rows:14
+                cols:2
+                spacing:2
+                size_hint: 0.8,1
+                
+                #
+                Label:
+                    text:'Pontos:'
+                    size_hint: 1,0.1
+                Label:
+                    size_hint: 0.15,1
+
+                #
+                Label:
+                    text:'Iniciais:'
+                    size_hint: 0.5,1
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_ini
+                    multiline: False
+
+                #
+                Label:
+                    text:'Defeitos:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_def
+                    multiline: False
+                    readonly:True
+
+                #
+                Label:
+                    text:'Recebidos:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_rec
+                    multiline: False
+                #
+                Label:
+                    text: 'Atributos:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_atb
+                    multiline: False
+                    readonly: True
+                #
+                Label:
+                    text:'Restantes:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_rest
+                    multiline: False
+                    readonly:True
+
+                #
+                Label:
+                    text:'Vantagens:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_vant
+                    multiline: False
+                    readonly:True
+
+                #
+                Label:
+                    text:'Desvantagens:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_desvan
+                    multiline: False
+                    readonly:True
+
+                #
+                Label:
+                    text:'Total em Perícias:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_total
+                    multiline: False
+                    readonly:True
+    
+                #
+                Label:
+                    text:'Fácil:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_p_f
+                    multiline: False
+                    readonly:True
+
+                #
+                Label:
+                    text:'Médio:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_p_m
+                    multiline: False
+                    readonly:True
+
+                #
+                Label:
+                    text:'Díficil:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_p_d
+                    multiline: False
+                    readonly:True
+
+                #
+                Label:
+                    text:'Muito Díficil:'
+                TextInput:
+                    size_hint: 0.15,1
+                    id: ponto_p_md
+                    multiline: False
+                    readonly:True
+
+            BoxLayout:
+                size_hint: 0.4,1
+        # Botões de Salvar e Carregar e rolagem de dados
+        GridLayout:
+            cols:2
+            rows:2
+            size_hint: 1, 0.125
+            Button:
+                text: "Salvar Personagem"
+                on_press: app.salvar_personagem()
+            Button:
+                text: "Carregar Personagem"
+                on_press: app.carregar_personagem()
+            Button:
+                id: resultado_1d6
+                text: "Rolar 1d6"
+                on_press: app.rolar_1d6('tela_atributos')
+            Button:
+                id: resultado_3d6_tela_atributos
+                text: "Rolar 3d6"
+                on_press: app.rolar_3d6('tela_atributos')
+
+# Tela de pericias
+<TelaPericias>:
+    name: 'tela_pericias'
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1  # Fundo preto
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        # rotulo
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1,0.03
+            Label:
+                size_hint: 0.5,1
+                text: 'Nome da Pericia'
+            Label:
+                size_hint: 0.17,1
+                text: '(ATB/Dif)'
+            Label:
+                size_hint: 0.07,1
+                text: 'Pts/'
+            Label:
+                size_hint: 0.07,1
+                text: 'Mod/'
+            Label:
+                size_hint: 0.08,1
+                text: 'Extra'
+            Label:
+                size_hint: 0.2,1
+
+            
+        # area onde as pericias são adicionandas
+        BoxLayout:
+            orientation: 'vertical'
+            ScrollView:
+                GridLayout:
+                    id: pericias_layout
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: 30
+                    
+            BoxLayout:
+                orientation:'horizontal'
+                size_hint: 1,0.05
+                Button:
+                    text: "Adicionar Perícia"
+                    on_press: root.adicionar_pericia()
+                Button:
+                    id: resultado_3d6_tela_pericias
+                    text: "3d6"
+                    size_hint_x: 0.25
+                    on_press: app.rolar_3d6('tela_pericias')
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: 1,0.05
+                Button:
+                    text: "Salvar Perícias"
+                    on_press: root.salvar_pericias()
+                Button:
+                    text: "Carregar Perícias"
+                    on_press: root.carregar_pericias()
+                Button:
+                    text: "Excluir"
+                    size_hint_x: 0.5
+                    on_press: root.alternar_botao_del()
+
+
+# Tela de Itens
+<TelaInventario>:
+    name:'tela_inventario'
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation:'vertical'
+        BoxLayout:
+            size_hint: 1,0.03
+            orientation:'horizontal'
+            Label:
+                size_hint_x: 0.8
+                text:'Nome do Item'
+            Label:
+                size_hint_x: 0.2
+                text:'QTD'
+            Label:
+                size_hint_x: 0.1
+                text:'Peso'
+            Label:
+                size_hint_x: 0.1
+        BoxLayout:
+            ScrollView:
+                GridLayout:
+                    id: inv_layout
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: 30
+            
+        Button:
+            text:'Adicionar Item'
+            size_hint: 1,0.05
+            on_press: root.adicionar_item()
+        BoxLayout:
+            size_hint: 1,0.05
+            orientation:'horizontal'
+            Button:
+                text:'Salvar Itens'
+                on_press: root.salvar_inventario()
+            Button:
+                text:'Carregar Itens'
+                on_press: root.carregar_inventario()
+            Button:
+                text:'Excluir'
+                size_hint: 0.5,1
+                on_press: root.alternar_botao_del()
+
+# tela vantagem e desvantagens
+<TelaVantagem>:
+    name:'tela_vantagem'
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation:'vertical'
+        # vantagens
+        BoxLayout:
+            orientation:'vertical'
+            BoxLayout:
+                orientation:'horizontal'
+                size_hint: 1,0.09
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1  # Fundo branco
+                    Line:
+                        width: 1
+                        rectangle: (self.x, self.y, self.width, self.height)
+                Label:
+                    size_hint_x: 
+                    text:'Vantagens'
+                Button:
+                    text:'Adicionar Vantagem'
+                    on_press: root.adicionar_vantagem()
+            BoxLayout:
+                ScrollView:
+                    GridLayout:
+                        id: vantagem_layout
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
+                        row_default_height: 30
+                
+        # desvantagens 
+        BoxLayout:
+            orientation:'vertical'
+            BoxLayout:
+                orientation:'horizontal'
+                size_hint: 1,0.09
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1  # Fundo branco
+                    Line:
+                        width: 1
+                        rectangle: (self.x, self.y, self.width, self.height)
+                Label:
+                    text:'Desvantagens'
+                Button:
+                    text:'Adicionar Desvantagem'
+                    on_press: root.adicionar_desvantagem()
+            BoxLayout:
+                ScrollView:
+                    GridLayout:
+                        id: desvantagem_layout
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
+                        row_default_height: 30
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint: 1,0.09
+            Button:
+                text:'Salvar Vantagem'
+                on_press: root.salvar_tela_vantagem()
+            Button:
+                text:'Carregar Vantagem'
+                on_press: root.carregar_tela_vantagem()
+            Button:
+                size_hint: 0.5,1
+                text:'Excluir'
+                on_press: root.alternar_botao_deletar()
+# Tela Anotações
+<TelaAnotacao>:
+    name: 'Anotacoes'
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    TextInput:
+        pos_hint:{"top":1,"x":0}
+        size_hint: 1,0.95
+        id: anotacoes_input
+        multiline: True
+        hint_text: 'Escreva aqui suas Anotações'
+    BoxLayout:
+        orientation:'horizontal'
+        size_hint: 1,0.05
+        Button:
+            text: 'Salvar Anotação'
+            on_press: root.salvar_anotacoes()
+        Button:
+            text: 'Carregar Anotação'
+            on_press: root.carregar_anotacoes()
