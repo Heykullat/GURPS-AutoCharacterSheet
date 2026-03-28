@@ -23,7 +23,10 @@ class GerenciadorDados:
                                 ht INTEGER,
                                 pva INTEGER,
                                 pfa INTEGER,
-                                pma INTEGER)''')
+                                pma INTEGER,
+                                ponto_ini INTEGER,
+                                ponto_rec INTEGER
+                                )''')
         # Criação da tabela de Pericias
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS Pericias (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -100,6 +103,7 @@ class GerenciadorDados:
                 personagem.pma, personagem.ponto_int, personagem.ponto_rec)
             )
         self.conexao.commit()
+        return 1
 
     def carregar_personagem(self, personagem_id):
         """Carrega um personagem do banco de dados, incluindo os novos campos."""
